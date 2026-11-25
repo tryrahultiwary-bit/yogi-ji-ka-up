@@ -1,0 +1,426 @@
+<!doctype html><html lang="en"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yogi Ji Ka UP</title>
+<meta name="description" content="Live Uttar Pradesh news by district and constituency.">
+<meta property="og:title" content="Yogi Ji Ka UP">
+<meta property="og:description" content="Live Uttar Pradesh news by district and constituency.">
+<meta property="og:image" content="https://tryrahultiwary-bit.github.io/yogi-ji-ka-up/hero.jpg">
+<style>
+:root{color-scheme:light dark;--page:#f5f5f7;--card:#fff;--text:#1d1d1f;--dim:#6e6e73;
+--sep:rgba(60,60,67,.12);--fill:rgba(118,118,128,.1);--fill2:rgba(118,118,128,.18);
+--accent:#0066cc;--sheet:#fff;--shadow:0 20px 60px rgba(0,0,0,.18),0 2px 8px rgba(0,0,0,.06)}
+@media(prefers-color-scheme:dark){:root{--page:#000;--card:#1c1c1e;--text:#f5f5f7;--dim:#98989d;
+--sep:rgba(84,84,88,.55);--fill:rgba(118,118,128,.22);--fill2:rgba(118,118,128,.36);
+--accent:#2997ff;--sheet:#2c2c2e;--shadow:0 20px 60px rgba(0,0,0,.7)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);-webkit-font-smoothing:antialiased;
+font:400 16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif}
+header,main{padding-inline:max(20px,calc(50% - 400px))}
+header{position:sticky;top:0;z-index:5;padding-block:14px 12px;border-bottom:.5px solid var(--sep);
+background:color-mix(in srgb,var(--page) 76%,transparent);
+-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px)}
+.bar{display:flex;align-items:center;gap:10px}
+.brand{margin-right:auto;min-width:0}
+h1{font-size:21px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin:0 0 3px}
+.live{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--dim);white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#34c759;box-shadow:0 0 0 3px rgba(52,199,89,.22)}
+.paused .dot{background:#ff9f0a;box-shadow:0 0 0 3px rgba(255,159,10,.22)}
+.f{display:flex;align-items:center;gap:10px;flex:0 1 440px;min-width:0}
+input[type=search]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:38px;
+padding:0 16px 0 38px;border:0;border-radius:980px;color:inherit;font:inherit;font-size:15px;
+background:var(--fill) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='none' stroke='%2386868b' stroke-width='1.7' stroke-linecap='round'%3E%3Ccircle cx='6.5' cy='6.5' r='4.8'/%3E%3Cpath d='M10.2 10.2 14 14'/%3E%3C/svg%3E") no-repeat 14px center;
+outline:2px solid transparent;transition:outline-color .2s ease}
+input::placeholder{color:var(--dim)}
+button{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 16px;border:0;
+border-radius:980px;font:inherit;font-size:14px;font-weight:500;white-space:nowrap;cursor:pointer;
+transition:background-color .2s ease,filter .2s ease,transform .2s ease}
+button:active{transform:scale(.97)}
+.go{background:#0071e3;color:#fff}
+.go:hover{filter:brightness(1.1)}
+.pill{background:var(--fill);color:var(--text)}
+.fwrap:hover .pill,.fwrap:focus-within .pill{background:var(--fill2)}
+.pill b{display:grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:9px;
+background:var(--accent);color:#fff;font-size:11px;font-weight:600}
+.fwrap{position:relative}
+/* filter sheet: revealed on hover or keyboard/touch focus, closes after a short grace period */
+.panel{position:absolute;top:100%;right:0;z-index:6;width:min(540px,calc(100vw - 40px));
+padding-top:10px;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);
+transform-origin:top right;transition:opacity .18s ease .25s,
+transform .22s cubic-bezier(.2,.8,.2,1) .25s,visibility 0s linear .45s}
+.fwrap:hover .panel,.fwrap:focus-within .panel{opacity:1;visibility:visible;transform:none;
+transition-delay:0s}
+.sheet{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px;padding:18px;border-radius:20px;
+max-height:calc(100vh - 96px);overflow:auto;
+background:var(--sheet);border:.5px solid var(--sep);box-shadow:var(--shadow)}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0;font-size:11px;font-weight:600;
+letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+select,input[type=date]{-webkit-appearance:none;appearance:none;width:100%;height:40px;
+padding:0 32px 0 12px;border:0;border-radius:11px;color:var(--text);font:inherit;font-size:15px;
+font-weight:400;letter-spacing:0;text-transform:none;text-overflow:ellipsis;
+outline:2px solid transparent;transition:outline-color .2s ease;
+background:var(--fill) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2386868b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center}
+input[type=date]{padding-right:10px;background-image:none}
+input[type=search]:focus,select:focus-visible,input[type=date]:focus-visible,
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px 0 12px;
+border-radius:980px;background:color-mix(in srgb,var(--accent) 12%,transparent);
+color:var(--accent);font-size:13px;font-weight:500;text-decoration:none;
+transition:background-color .2s ease}
+.chip:hover{background:color-mix(in srgb,var(--accent) 22%,transparent)}
+.chip i{font-style:normal;opacity:.65}
+.chip.all{background:none;color:var(--dim)}
+.hero{margin:22px max(20px,calc(50% - 400px)) 0;overflow:hidden;border-radius:24px;
+background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.08)}
+.hero img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;
+animation:heroin 1.1s cubic-bezier(.2,.8,.2,1);transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.hero:hover img{transform:scale(1.025)}
+@keyframes heroin{from{opacity:0;transform:scale(1.05)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);
+border-top:.5px solid var(--sep)}
+.stats div{padding:14px 8px 15px;text-align:center}
+.stats div+div{border-left:.5px solid var(--sep)}
+.stats b{display:block;font-size:24px;font-weight:700;letter-spacing:-.02em;line-height:1.15;
+font-variant-numeric:tabular-nums;color:#e8590c}
+.stats span{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+color:var(--dim)}
+@media(max-width:640px){.hero{margin-top:14px;border-radius:18px}.stats b{font-size:19px}
+.stats span{font-size:9.5px;letter-spacing:.03em}.stats div{padding:11px 2px 12px}}
+main{padding-block:2px 64px}
+h2{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);
+margin:24px 4px 10px}
+ul{list-style:none;margin:0;padding:0;background:var(--card);border-radius:18px;overflow:hidden}
+li{position:relative;display:flex;align-items:flex-start;gap:14px;padding:16px 18px;
+transition:background-color .2s ease}
+li+li::before{content:"";position:absolute;top:0;left:68px;right:0;border-top:.5px solid var(--sep)}
+li:hover{background:var(--fill)}
+.av{position:relative;flex:none;display:grid;place-items:center;width:36px;height:36px;
+overflow:hidden;border-radius:9px;background:var(--fill2);color:var(--dim);font-size:15px;
+font-weight:600}
+.av img{position:absolute;inset:0;width:100%;height:100%;padding:7px;object-fit:contain;
+background:#fff}
+.body{flex:1;min-width:0}
+.t{display:block;color:inherit;text-decoration:none;font-size:17px;font-weight:600;
+line-height:1.36;letter-spacing:-.012em;transition:color .2s ease}
+a.t::after{content:"";position:absolute;inset:0}
+li:hover a.t{color:var(--accent)}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-top:7px;font-size:13px;
+color:var(--dim)}
+.tag{position:relative;z-index:1;padding:1px 9px;border-radius:980px;background:var(--fill);
+color:var(--dim);font-size:12px;text-decoration:none;transition:background-color .2s ease,color .2s ease}
+a.tag:hover{background:var(--fill2);color:var(--text)}
+.th{position:relative;flex:none;width:136px;aspect-ratio:16/9;overflow:hidden;border-radius:10px;
+background:var(--fill2)}
+.th img{display:block;width:100%;height:100%;object-fit:cover;
+transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+li:hover .th img{transform:scale(1.06)}
+.th.v::after{content:"";position:absolute;inset:0;margin:auto;width:30px;height:30px;border-radius:50%;
+background:rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3.5 1.8v8.4L10.3 6z' fill='%23fff'/%3E%3C/svg%3E") center/13px no-repeat}
+.sh{display:flex;gap:2px;margin:-6px -6px -6px auto;opacity:0;transition:opacity .2s ease}
+li:hover .sh,.sh:focus-within{opacity:1}
+.s{position:relative;z-index:1;display:grid;place-items:center;width:30px;height:30px;padding:0;
+border:0;border-radius:50%;background:none;color:var(--dim);cursor:pointer;
+transition:background-color .2s ease,color .2s ease}
+.s:hover{background:var(--fill2);color:var(--text)}
+.s svg{width:15px;height:15px;fill:currentColor}
+.s.done{color:#34c759}
+.wide{grid-column:1/-1}
+.frow{display:flex;align-items:center;gap:14px}
+.frow a{font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--accent);
+text-decoration:none}
+.frow a:first-of-type{margin-left:auto}
+.cks{display:flex;flex-wrap:wrap;gap:6px}
+.ck input{position:absolute;opacity:0;pointer-events:none}
+.ck span{display:block;padding:5px 11px;border-radius:980px;background:var(--fill);
+color:var(--text);font-size:13px;font-weight:400;letter-spacing:0;text-transform:none;
+cursor:pointer;transition:background-color .2s ease,color .2s ease}
+.ck:hover span{background:var(--fill2)}
+.ck input:checked+span{background:#0071e3;color:#fff}
+.ck input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.player{position:fixed;right:20px;bottom:20px;z-index:9;width:210px;overflow:hidden;
+border-radius:16px;background:#000;box-shadow:var(--shadow);
+animation:pop .3s cubic-bezier(.2,.8,.2,1)}
+.player iframe{display:block;width:210px;height:373px;border:0}
+.player button{position:absolute;top:6px;right:6px;justify-content:center;width:28px;height:28px;
+padding:0;background:rgba(0,0,0,.6);color:#fff;font-size:16px}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.96)}}
+.empty{justify-content:center;padding:60px 20px;color:var(--dim)}
+.pager{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;margin-top:24px}
+.pager a,.pager b,.pager span{display:grid;place-items:center;min-width:36px;height:36px;
+padding:0 13px;border-radius:980px;font-size:14px;font-weight:500;text-decoration:none;
+color:var(--text)}
+.pager a{background:var(--card);transition:background-color .2s ease}
+.pager a:hover{background:var(--fill2)}
+.pager b{background:#0071e3;color:#fff}
+.pager span{min-width:0;padding:0 2px;color:var(--dim)}
+.foot{margin:14px 4px 0;font-size:13px;color:var(--dim);text-align:center}
+@media(max-width:640px){.bar{flex-wrap:wrap}.f{order:3;flex:1 1 100%}
+.sheet{grid-template-columns:1fr}.th{width:96px}li{padding:14px;gap:12px}
+.av{width:30px;height:30px;border-radius:8px;font-size:13px}.av img{padding:5px}
+li+li::before{left:56px}.t{font-size:16px}}
+@media(pointer:coarse){button,input[type=search]{height:44px}select,input[type=date]{height:44px}
+.s{width:40px;height:40px}.ck span{padding:9px 13px}
+.pager a,.pager b{min-width:44px;height:44px}}
+@media(hover:none){.sh{opacity:1}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+[hidden]{display:none!important}
+</style>
+<header><div class="bar"><div class="brand"><h1>Yogi Ji Ka UP</h1>
+<div class="live" id="live"><span class="dot"></span><span id="status">Loading…</span></div></div>
+<form class="f" id="f">
+<input type="search" name="q" placeholder="Search headlines" aria-label="Search headlines">
+<div class="fwrap"><button type="button" class="pill" aria-haspopup="true"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 4h11M4 7.5h7M6 11h3"/></svg>Filters<b id="count" hidden></b></button>
+<div class="panel"><div class="sheet">
+<div class="field wide"><div class="frow">Districts<a id="all" href="?district=all">Select all</a><a id="none" href="?">None</a></div>
+<div class="cks" id="districts"></div></div>
+<label class="field">Constituency<select name="ac"></select></label>
+<label class="field">Source<select name="source"></select></label>
+<label class="field">Topic<select name="topic"></select></label>
+<label class="field">Language<select name="lang"><option value="">All languages</option>
+<option value="hi">Hindi</option><option value="en">English</option></select></label>
+<label class="field">From<input type="date" name="from"></label>
+<label class="field">To<input type="date" name="to"></label>
+</div></div></div></form>
+<button class="go" id="reload" type="button">Reload</button></div>
+<div class="chips" id="chips" hidden></div></header>
+<section class="hero" id="hero" hidden><img src="hero.jpg" width="1920" height="1080"
+alt="Yogi ji ka UP: illustration of Yogi Adityanath speaking at a podium with supporters behind him">
+<div class="stats" id="stats"></div></section>
+<main id="main"></main>
+<footer class="foot" style="margin:-34px 20px 44px">Unofficial news digest. Headlines and photos belong to their publishers.</footer>
+<noscript><p class="foot">This page needs JavaScript to show the news.</p></noscript>
+<script>
+// Yogi Ji Ka UP: everything on this page is drawn from data.json, which the watcher rewrites.
+// Item layout: [title, link, time, source, site, image, language, topic, [constituency numbers], [districts]]
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const two = n => String(n).padStart(2, "0");
+const KEYS = ["q", "district", "ac", "source", "topic", "lang", "from", "to"];
+const PER_PAGE = 20, STALE_AFTER = 30 * 60, LANGS = {hi: "Hindi", en: "English"};
+const ICONS = {wa: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>', x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>', link: '<svg viewBox="0 0 24 24" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>'};
+const form = $("#f");
+let D = null, SEAT = {}, DISTRICTS = [], noHero = false;
+
+function state() {
+  const p = new URLSearchParams(location.search), f = {};
+  for (const k of KEYS) f[k] = p.get(k) || "";
+  f.page = Math.max(1, parseInt(p.get("page")) || 1);
+  return f;
+}
+function url(f, page = 1) {
+  const p = new URLSearchParams();
+  for (const k of KEYS) if (f[k]) p.set(k, f[k]);
+  if (page > 1) p.set("page", page);
+  const s = p.toString();
+  return s ? "?" + s : location.pathname;
+}
+function go(href, replace) {
+  history[replace ? "replaceState" : "pushState"](null, "", href);
+  render();
+  if (!replace) scrollTo(0, 0);
+}
+const picked = f => f.district === "all" ? DISTRICTS : f.district.split(",").filter(d => DISTRICTS.includes(d));
+const dayStart = text => { const t = new Date(text + "T00:00:00").getTime() / 1000; return isNaN(t) ? null : t; };
+
+function matching(f) {
+  const q = f.q.toLowerCase(), ac = parseInt(f.ac) || 0, places = new Set(picked(f));
+  const seats = new Set(D.seats.filter(s => places.has(s[2])).map(s => s[0]));
+  const from = f.from ? dayStart(f.from) : null, to = f.to ? dayStart(f.to) : null;
+  return D.items.filter(i =>
+    (!q || i[0].toLowerCase().includes(q)) &&
+    (!ac || i[8].includes(ac)) &&
+    (!places.size || i[8].some(a => seats.has(a)) || i[9].some(d => places.has(d))) &&
+    (!f.source || i[3] === f.source) && (!f.topic || i[7] === f.topic) && (!f.lang || i[6] === f.lang) &&
+    (from === null || i[2] >= from) && (to === null || i[2] < to + 86400));
+}
+
+function row(i) {
+  const [title, link, ts, source, site, image] = i;
+  const head = source && title.endsWith(" - " + source) ? title.slice(0, -source.length - 3) : title;
+  const safe = /^https?:\/\//.test(link);  // never emit javascript: links from a feed
+  const video = safe && link.match(/youtube\.com\/(?:watch\?v=|shorts\/)([\w-]{11})/);
+  const picture = video ? `https://i.ytimg.com/vi/${video[1]}/mqdefault.jpg` : image;
+  let host = "";
+  try { host = /^https?:/.test(site || "") ? new URL(site).hostname : ""; } catch {}
+  const icon = host ? `<img src="https://www.google.com/s2/favicons?sz=64&amp;domain=${esc(host)}" alt="" loading="lazy" onerror="this.remove()">` : "";
+  const letter = esc((source.replace(/^YouTube: /, "") || "?")[0].toUpperCase());
+  const thumb = /^https?:\/\//.test(picture || "")
+    ? `<span class="th${video ? " v" : ""}"><img src="${esc(picture)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></span>` : "";
+  const places = i[8].filter(a => SEAT[a]).length
+    ? i[8].filter(a => SEAT[a]).map(a => ["?ac=" + a, SEAT[a]])
+    : i[9].map(d => ["?district=" + encodeURIComponent(d), d]);
+  const tags = places.slice(0, 2).map(([href, name]) => `<a class="tag" href="${esc(href)}">${esc(name)}</a>`).join("")
+    + (places.length > 2 ? `<span class="tag">+${places.length - 2}</span>` : "");
+  const share = !safe ? "" : '<span class="sh">'
+    + `<a class="s" href="https://wa.me/?text=${encodeURIComponent(head + "\n" + link)}" target="_blank" rel="noopener" title="Share on WhatsApp" aria-label="Share on WhatsApp">${ICONS.wa}</a>`
+    + `<a class="s" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(head)}&amp;url=${encodeURIComponent(link)}" target="_blank" rel="noopener" title="Share on X" aria-label="Share on X">${ICONS.x}</a>`
+    + `<button type="button" class="s" data-copy="${esc(link)}" title="Copy link" aria-label="Copy link">${ICONS.link}</button></span>`;
+  const t = new Date(ts * 1000);
+  const text = safe ? `<a class="t" href="${esc(link)}" target="_blank" rel="noopener">${esc(head)}</a>` : `<span class="t">${esc(head)}</span>`;
+  return `<li><span class="av">${letter}${icon}</span><div class="body">${text}<div class="meta"><span>${esc(source)}</span>`
+    + `<span>${two(t.getHours())}:${two(t.getMinutes())}</span>${tags}${share}</div></div>${thumb}</li>`;
+}
+
+const dayKey = ts => { const d = new Date(ts * 1000); return d.getFullYear() + "-" + two(d.getMonth() + 1) + "-" + two(d.getDate()); };
+function dayLabel(ts) {
+  const now = Date.now() / 1000;
+  if (dayKey(ts) === dayKey(now)) return "Today";
+  if (dayKey(ts) === dayKey(now - 86400)) return "Yesterday";
+  return new Date(ts * 1000).toLocaleDateString("en-IN", {weekday: "long", day: "numeric", month: "long"});
+}
+
+function pager(f, n, pages) {
+  if (pages < 2) return "";
+  const link = (to, text, label) => `<a href="${esc(url(f, to))}" aria-label="${label}">${text}</a>`;
+  const shown = [...new Set([1, n - 1, n, n + 1, pages])].filter(p => p >= 1 && p <= pages).sort((a, b) => a - b);
+  let out = "", last = 0;
+  for (const to of shown) {
+    if (to - last > 1) out += "<span>…</span>";
+    out += to === n ? `<b aria-current="page">${to}</b>` : link(to, to, "Page " + to);
+    last = to;
+  }
+  return '<nav class="pager" aria-label="Pages">' + (n > 1 ? link(n - 1, "‹ Previous", "Previous page") : "") + out
+    + (n < pages ? link(n + 1, "Next ›", "Next page") : "") + `</nav><p class="foot">Page ${n} of ${pages.toLocaleString("en-IN")}</p>`;
+}
+
+function chips(f) {
+  const places = picked(f);
+  const label = {
+    q: "“" + f.q + "”", ac: SEAT[parseInt(f.ac)] || f.ac, source: f.source, topic: f.topic, lang: LANGS[f.lang] || f.lang,
+    district: places.length === DISTRICTS.length ? `All ${DISTRICTS.length} districts` : places.length === 1 ? places[0] : places.length + " districts",
+    from: "From " + f.from, to: "To " + f.to,
+  };
+  const active = KEYS.filter(k => f[k]);
+  $("#chips").hidden = !active.length;
+  $("#chips").innerHTML = active.map(k =>
+    `<a class="chip" href="${esc(url({...f, [k]: ""}))}" aria-label="Remove filter ${esc(label[k])}">${esc(label[k])}<i>×</i></a>`).join("")
+    + `<a class="chip all" href="${esc(location.pathname)}">Clear all</a>`;
+}
+
+function fillForm(f) {  // make the filter sheet show the current state
+  const count = (list, at) => list.reduce((m, i) => (i[at] && m.set(i[at], (m.get(i[at]) || 0) + 1), m), new Map());
+  const options = (first, pairs, current) => `<option value="">${first}</option>` + pairs.map(([v, text]) =>
+    `<option value="${esc(v)}"${String(v) === current ? " selected" : ""}>${esc(text)}</option>`).join("");
+  const sources = [...count(D.items, 3)].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  form.source.innerHTML = options("All sources", sources.map(([s, n]) => [s, `${s} (${n})`]), f.source);
+  form.topic.innerHTML = options("All topics", D.topics.map(t => [t, t]), f.topic);
+  form.lang.value = f.lang;
+  form.ac.innerHTML = '<option value="">All constituencies</option>' + DISTRICTS.map(d => `<optgroup label="${esc(d)}">`
+    + D.seats.filter(s => s[2] === d).sort((a, b) => a[1].localeCompare(b[1])).map(s =>
+      `<option value="${s[0]}"${String(s[0]) === f.ac ? " selected" : ""}>${esc(s[1])}</option>`).join("") + "</optgroup>").join("");
+  const places = new Set(picked(f));
+  $("#districts").innerHTML = DISTRICTS.map(d =>
+    `<label class="ck"><input type="checkbox" name="district" value="${esc(d)}"${places.has(d) ? " checked" : ""}><span>${esc(d)}</span></label>`).join("");
+  $("#all").href = url({...f, district: "all"});
+  $("#all").textContent = "Select all " + DISTRICTS.length;
+  $("#none").href = url({...f, district: ""});
+  if (document.activeElement !== form.q) form.q.value = f.q;
+  form.from.value = f.from; form.to.value = f.to;
+  const active = KEYS.filter(k => f[k] && k !== "q").length;
+  $("#count").hidden = !active; $("#count").textContent = active;
+}
+
+function render() {
+  if (!D) return;
+  const f = state(), found = matching(f), filtered = KEYS.some(k => f[k]);
+  const pages = Math.max(1, Math.ceil(found.length / PER_PAGE)), n = Math.min(f.page, pages);
+  let out = "", day = "";
+  for (const i of found.slice((n - 1) * PER_PAGE, n * PER_PAGE)) {
+    if (dayKey(i[2]) !== day) { out += (day ? "</ul>" : "") + `<h2>${dayLabel(i[2])}</h2><ul>`; day = dayKey(i[2]); }
+    out += row(i);
+  }
+  out = found.length ? out + "</ul>"
+    : `<h2>&nbsp;</h2><ul><li class="empty">${filtered ? "No matches. Try removing a filter." : "No headlines yet."}</li></ul>`;
+  $("#main").innerHTML = out + pager(f, n, pages);
+  chips(f); fillForm(f);
+
+  // status: live on the home view; says so plainly when the data has stopped arriving
+  const total = found.length.toLocaleString("en-IN"), age = Date.now() / 1000 - D.updated, u = new Date(D.updated * 1000);
+  const stamp = two(u.getHours()) + ":" + two(u.getMinutes()) + (age > 86400 ? ", " + u.toLocaleDateString("en-IN", {day: "numeric", month: "short"}) : "");
+  const stale = age > STALE_AFTER, home = !filtered && n === 1;
+  $("#live").classList.toggle("paused", stale || !home);
+  $("#status").textContent = stale ? `Not updating since ${stamp} · ${total} ${filtered ? "matches" : "headlines"}`
+    : filtered ? `Paused · ${total} matches` : home ? `Live · ${total} headlines · updated ${stamp}` : `Paused · ${total} headlines`;
+
+  $("#hero").hidden = !home || noHero;
+  const midnight = dayStart(dayKey(Date.now() / 1000));
+  const figures = [[D.items.filter(i => i[2] >= midnight).length.toLocaleString("en-IN"), "News today"],
+    [new Set(D.items.map(i => i[3])).size, "Sources"], [DISTRICTS.length, "Districts"], [D.seats.length, "Constituencies"]];
+  $("#stats").innerHTML = figures.map(([value, label]) => `<div><b>${value}</b><span>${label}</span></div>`).join("");
+}
+
+async function load() {
+  const fresh = await (await fetch("data.json?t=" + Date.now(), {cache: "no-store"})).json();
+  D = fresh;
+  SEAT = Object.fromEntries(D.seats.map(s => [s[0], s[1]]));
+  DISTRICTS = [...new Set(D.seats.map(s => s[2]))].sort();
+  render();
+}
+
+function play() {  // the Reload sound: a small visible YouTube player, removed when the clip ends
+  document.querySelector(".player")?.remove();
+  if (!D || !/^[\w-]{11}$/.test(D.sound || "")) return;
+  const p = document.createElement("div");
+  p.className = "player";
+  p.innerHTML = '<iframe title="Reload sound" allow="autoplay; encrypted-media" src="https://www.youtube-nocookie.com/embed/'
+    + D.sound + '?autoplay=1&playsinline=1&enablejsapi=1&rel=0"></iframe><button type="button" aria-label="Close player">×</button>';
+  p.lastChild.onclick = () => p.remove();
+  const frame = p.firstChild;
+  frame.onload = () => frame.contentWindow.postMessage('{"event":"listening","id":1,"channel":"widget"}', "*");
+  document.body.append(p);
+}
+addEventListener("message", e => {
+  try {
+    if (!/(^|\.)youtube(-nocookie)?\.com$/.test(new URL(e.origin).hostname)) return;
+    if (JSON.parse(e.data).info?.playerState === 0) document.querySelector(".player")?.remove();
+  } catch {}
+});
+
+$("#reload").onclick = async e => {
+  const btn = e.currentTarget, f = state();
+  play();
+  btn.disabled = true; btn.textContent = "Loading…";
+  try {
+    // on the watcher's own machine, ask it to fetch right now; the public copy just re-reads the data
+    if (!location.hostname.endsWith("github.io")) await fetch("reload?district=" + encodeURIComponent(f.district), {method: "POST"}).catch(() => {});
+    await load();
+  } finally { btn.disabled = false; btn.textContent = "Reload"; }
+};
+
+function fromForm() {
+  const f = state();
+  for (const k of ["q", "ac", "source", "topic", "lang", "from", "to"]) f[k] = form[k].value.trim();
+  const on = [...form.querySelectorAll("[name=district]:checked")].map(b => b.value);
+  f.district = on.length && on.length === DISTRICTS.length ? "all" : on.join(",");
+  return f;
+}
+form.addEventListener("change", () => go(url(fromForm())));
+let typing;
+form.q.addEventListener("input", () => { clearTimeout(typing); typing = setTimeout(() => go(url(fromForm()), true), 250); });
+form.addEventListener("submit", e => e.preventDefault());
+
+document.addEventListener("click", e => {
+  const copy = e.target.closest("[data-copy]");
+  if (copy) {
+    navigator.clipboard.writeText(copy.dataset.copy).then(() => {
+      copy.classList.add("done"); setTimeout(() => copy.classList.remove("done"), 1200);
+    });
+    return;
+  }
+  // filter, tag and page links change the view in place, no page load
+  const a = e.target.closest("a");
+  if (a && !a.target && a.origin === location.origin && a.pathname === location.pathname && !e.metaKey && !e.ctrlKey) {
+    e.preventDefault();
+    go(a.getAttribute("href"));
+  }
+});
+addEventListener("popstate", render);
+$("#hero img").onerror = () => { noHero = true; $("#hero").hidden = true; };
+
+load().catch(() => { $("#status").textContent = "Could not load the news data"; });
+// the home view refreshes itself every minute, unless a clip is playing or the filter sheet is open
+setInterval(() => {
+  const f = state();
+  if (!KEYS.some(k => f[k]) && f.page === 1 && !document.querySelector(".player, .fwrap:hover, .fwrap:focus-within")) load().catch(() => {});
+}, 60000);
+</script>
